@@ -1,0 +1,2 @@
+D:\Student\IT-12\Patiuk\AP\lab_2\labs6\lab6.4_iter\Debug\lab6.4_iter.exe
+D:\Student\IT-12\Patiuk\AP\lab_2\labs6\lab6.4_iter\Debug\lab6.4_iter.pdb
