@@ -50,7 +50,7 @@ void iter(double* a, double Low, double Max, int N, double C, double* b)
 		dobutok *= a[l];                 
 	cout << endl;
 	cout << "Добуток елементів розміщені після останнього більшого за модулем елемента: " << dobutok << endl;
-	cout << endl;
+	cout << "Кількість елементів більших від С: " << j << endl;
 	change(a, b, N); // 5) <- виклик для створення модифікованого масиву
 }
 int unittest(double* y, double C, const int N)
