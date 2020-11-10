@@ -10,7 +10,7 @@ void change(double* a, double* b, int N)
 	{
 		if (a[i] < 0)
 		{
-			b[l] = a[i]; // 7) <- створення модифікованого масиву
+			b[l] = a[i]; // 6) <- створення модифікованого масиву
 			++l;
 		}
 	}
@@ -18,27 +18,34 @@ void change(double* a, double* b, int N)
 	{
 		if (a[i] >= 0)
 		{
-			b[l] = a[i]; // 8) <- продовження створення модифікованого масиву
+			b[l] = a[i]; // 7) <- продовження створення модифікованого масиву
 			++l;
 		}
 	}
 	for (int l = 0; l <= N - 1; ++l)
-		cout << setw(5) << b[l] << " "; // 9) <- вивід модифікованого масиву
+		cout << setw(5) << b[l] << " "; // 8) <- вивід модифікованого масиву
+}
+void print_iter(double* a,  int N)
+{
+	for (int i = 0; i <= N - 1; ++i)
+	{
+		cout << setw(5) << a[i] << " ";
+	}
 }
 void iter(double* a, double Low, double Max, int N, double C, double* b)
 {
 	int j = 0;
 	for (int i = 0; i <= N - 1; ++i)
 	{
-		a[i] = (Max - Low) * rand() / RAND_MAX + Low; // 1) <- створення масиву
+		a[i] = (Max - Low) * rand() / RAND_MAX + Low; // 1.1) <- створення масиву
 		if (a[i] > C)
 			++j;
-		cout << setw(5) << a[i] << " ";
 	}
+	print_iter(a, N);                                         // 1.2) <- вивід масиву
 	double dobutok = 1;
 	double max = a[0];
 	int l = 0;
-	for (int i = 0; i <= N - 1; ++i) // 2) <- цикл обрахунку добутку 
+	for (int i = 0; i <= N - 1; ++i) // 2) <- цикл обрахунку максимального значення по модулю
 	{
 		if (fabs(max) <= fabs(a[i]))
 		{
