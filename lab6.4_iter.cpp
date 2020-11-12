@@ -3,73 +3,13 @@
 #include <iomanip>
 
 using namespace std;
-void change(double* a, double* b, int N)
-{
-	int l = 0;
-	for (int i = 0;i <= N - 1; ++i)
-	{
-		if (a[i] < 0)
-		{
-			b[l] = a[i]; // 6) <- створення модифікованого масиву
-			++l;
-		}
-	}
-	for (int i = 0; i <= N - 1; ++i)
-	{
-		if (a[i] >= 0)
-		{
-			b[l] = a[i]; // 7) <- продовження створення модифікованого масиву
-			++l;
-		}
-	}
-	for (int l = 0; l <= N - 1; ++l)
-		cout << setw(5) << b[l] << " "; // 8) <- вивід модифікованого масиву
-}
-void print_iter(double* a,  int N)
-{
-	for (int i = 0; i <= N - 1; ++i)
-	{
-		cout << setw(5) << a[i] << " ";
-	}
-}
-void iter(double* a, double Low, double Max, int N, double C, double* b)
-{
-	int j = 0;
-	for (int i = 0; i <= N - 1; ++i)
-	{
-		a[i] = (Max - Low) * rand() / RAND_MAX + Low; // 1.1) <- створення масиву
-		if (a[i] > C)
-			++j;
-	}
-	print_iter(a, N);                                         // 1.2) <- вивід масиву
-	double dobutok = 1;
-	double max = a[0];
-	int l = 0;
-	for (int i = 0; i <= N - 1; ++i) // 2) <- цикл обрахунку максимального значення по модулю
-	{
-		if (fabs(max) <= fabs(a[i]))
-		{
-			max = a[i];
-			l = i;                    // 3) <- знаходження індексу з максимальним за модулем значенням
-		}
-	}
-	for (l; l <= N - 1; ++l)        // 4) <- цикл обрахунку добутка
-		dobutok *= a[l];                 
-	cout << endl;
-	cout << "Добуток елементів розміщені після останнього більшого за модулем елемента: " << dobutok << endl;
-	cout << "Кількість елементів більших від С: " << j << endl;
-	change(a, b, N); // 5) <- виклик для створення модифікованого масиву
-}
-int unittest(double* y, double C, const int N)
-{
-	int j = 0;
-	for (int i = 0; i <= N - 1; ++i)
-	{
-		if (y[i] > C)
-			++j;
-	}
-	return j;
-}
+
+void create(double* a, double Low, double Max, int N);
+void print(double* a, int N);
+int moreC(double* a, int N, double C);
+int find_last_fabs(double* a, int N, double max);
+double dob(double* a, int N, int l);
+void create2(double* a, double* b, int N);
 
 int main()
 {
@@ -84,16 +24,82 @@ int main()
 	cout << "Введіть мінімальне значення масиву: "; cin >> Low;
 	cout << "Введіть максимальне значення масиву: "; cin >> Max;
 	cout << endl;
-	cout << "Ітераційний" << endl;
+	cout << "Рекурсивний" << endl;
 	double* a = new double[N];
 	double* b = new double[N];
-	iter(a, Low, Max, N, C, b);
+	create(a, Low, Max, N);
+	print(a, N);
+	cout << endl;
+	cout << "Кількість елементів більших від С: " << moreC(a, N, C) << endl;
+	int l = find_last_fabs(a, N, a[0]);
+	cout << "Добуток елементів після останнього більшого по модулю елемента: " << dob(a, N, l) << endl;
+	create2(a, b, N);
+	print(b, N);
 	delete[] a;
 	delete[] b;
 	cout << endl;
-	double y[10] = { -10.20, 25.34, 7.89, -15.01, 17.53, 3.21, 31.10, 0.35, 4.00, 5.5 };
-	cout << endl;
-	cout << "Unit test result: " << unittest(y, 8.8, 10) << endl;
+}
+void create(double* a, double Low, double Max, int N)
+{
+	int j = 0;
+	for (int i = 0; i <= N - 1; ++i)
+		a[i] = (Max - Low) * rand() / RAND_MAX + Low; 
+}
+void print(double* a, int N)
+{
+	for (int i = 0; i <= N - 1; ++i)
+		cout << setw(5) << a[i] << " ";
+}
+int moreC(double* a, int N, double C)
+{
+	int j = 0;
+	for (int i = 0; i <= N - 1; ++i)
+	{
+		if (a[i] > C)
+			++j;
+	}
+	return j;
+
+}
+int find_last_fabs(double* a, int N, double max)
+{
+	int l = 0;
+	for (int i = 0; i <= N - 1; ++i) 
+	{
+		if (fabs(max) <= fabs(a[i]))
+		{
+			max = a[i];
+			l = i;                    
+		}
+	}
+	return l;
+}
+double dob(double*a, int N, int l)
+{
+	double dobutok = 1;
+	for (l; l <= N - 1; ++l)        
+		dobutok *= a[l];
+	return dobutok;
+}
+void create2(double* a, double* b, int N)
+{
+	int l = 0;
+	for (int i = 0; i <= N - 1; ++i)
+	{
+		if (a[i] < 0)
+		{
+			b[l] = a[i]; 
+			++l;
+		}
+	}
+	for (int i = 0; i <= N - 1; ++i)
+	{
+		if (a[i] >= 0)
+		{
+			b[l] = a[i]; 
+			++l;
+		}
+	}
 }
 
 
